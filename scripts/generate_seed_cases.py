@@ -1,16 +1,28 @@
 import json
+import os
 import torch
 from tqdm import tqdm
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
-MODEL_NAME = "Qwen/Qwen2.5-0.5B"
+MODEL_NAME = "/data1/zxy/models/qwen/Qwen2.5-0.5B-Instruct"
 
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+# -------------------------
+# Load tokenizer & model
+# -------------------------
+
+tokenizer = AutoTokenizer.from_pretrained(
+    MODEL_NAME,
+    trust_remote_code=True
+)
+
 model = AutoModelForCausalLM.from_pretrained(
     MODEL_NAME,
     torch_dtype=torch.float16,
-    device_map="auto"
+    device_map="auto",
+    trust_remote_code=True
 )
+
+model.eval()
 
 # -------------------------
 # Competency Templates
@@ -101,38 +113,61 @@ for seed in tqdm(seeds):
         continue
 
     prompt = f"""
-You are a senior clinical medical educator.
+    Generate a medical training case.
 
-Generate a medical training case.
+    Department: {seed['department']}
+    Competency: {seed['competency']}
+    Difficulty: {seed['difficulty']}
+    Example disease: {seed['disease_example']}
 
-Department: {seed['department']}
-Competency: {seed['competency']}
-Difficulty: {seed['difficulty']}
-Example disease: {seed['disease_example']}
+    Follow this format strictly:
 
-Follow this format strictly:
+    {template}
+    """
 
-{template}
-"""
+    # -------- Chat Template --------
 
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+    messages = [
+        {"role": "system", "content": "You are a senior clinical medical educator."},
+        {"role": "user", "content": prompt}
+    ]
+
+    chat_text = tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,
+        add_generation_prompt=True
+    )
+
+    inputs = tokenizer(chat_text, return_tensors="pt").to(model.device)
+
+    # -------- Generate --------
 
     outputs = model.generate(
         **inputs,
         max_new_tokens=400,
         temperature=0.7,
-        do_sample=True
+        top_p=0.9,
+        do_sample=True,
+        repetition_penalty=1.1
     )
 
-    text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    generated = outputs[0][inputs["input_ids"].shape[1]:]
+
+    text = tokenizer.decode(
+        generated,
+        skip_special_tokens=True
+    )
+
+    # -------- Save result --------
 
     results.append({
         "id": seed["id"],
         "department": seed["department"],
         "competency": seed["competency"],
         "difficulty": seed["difficulty"],
-        "case_text": text
+        "case_text": text.strip()
     })
+
 
 with open("output/seed_cases.json","w") as f:
     json.dump(results,f,indent=2)
