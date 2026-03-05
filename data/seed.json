@@ -3,126 +3,525 @@
     "id": 1,
     "department": "Internal Medicine",
     "competency": "Symptom Gathering",
-    "difficulty": "Basic",
-    "disease_example": "Acute ischemic stroke"
+    "difficulty": "easy",
+    "disease_example": "Esophageal cancer radiotherapy"
   },
   {
     "id": 2,
     "department": "Internal Medicine",
-    "competency": "Differential Diagnosis",
-    "difficulty": "Intermediate",
-    "disease_example": "Chest pain (ACS vs GERD)"
+    "competency": "Symptom Gathering",
+    "difficulty": "medium",
+    "disease_example": "Old cerebral infarction"
   },
   {
     "id": 3,
     "department": "Internal Medicine",
-    "competency": "Recommend Tests",
-    "difficulty": "Intermediate",
-    "disease_example": "Chronic cough"
+    "competency": "Symptom Gathering",
+    "difficulty": "hard",
+    "disease_example": "Type 2 diabetes"
   },
   {
     "id": 4,
     "department": "Internal Medicine",
-    "competency": "Final Diagnosis",
-    "difficulty": "Advanced",
-    "disease_example": "Heart failure"
+    "competency": "Differential Diagnosis",
+    "difficulty": "easy",
+    "disease_example": "ANCA-associated vasculitis"
   },
   {
     "id": 5,
-    "department": "Surgery",
-    "competency": "Symptom Gathering",
-    "difficulty": "Basic",
-    "disease_example": "Acute appendicitis"
+    "department": "Internal Medicine",
+    "competency": "Differential Diagnosis",
+    "difficulty": "medium",
+    "disease_example": "Type 1 diabetes"
   },
   {
     "id": 6,
-    "department": "Surgery",
+    "department": "Internal Medicine",
     "competency": "Differential Diagnosis",
-    "difficulty": "Intermediate",
-    "disease_example": "Acute abdominal pain"
+    "difficulty": "hard",
+    "disease_example": "Bilateral nodular goiter"
   },
   {
     "id": 7,
-    "department": "Surgery",
+    "department": "Internal Medicine",
     "competency": "Recommend Tests",
-    "difficulty": "Intermediate",
-    "disease_example": "Suspected gallstones"
+    "difficulty": "easy",
+    "disease_example": "Cerebral infarction"
   },
   {
     "id": 8,
-    "department": "Surgery",
-    "competency": "Treatment Plan",
-    "difficulty": "Advanced",
-    "disease_example": "Bowel obstruction"
+    "department": "Internal Medicine",
+    "competency": "Recommend Tests",
+    "difficulty": "medium",
+    "disease_example": "Acute pulmonary embolism"
   },
   {
     "id": 9,
-    "department": "OB/GYN",
-    "competency": "Symptom Gathering",
-    "difficulty": "Basic",
-    "disease_example": "Early pregnancy nausea"
+    "department": "Internal Medicine",
+    "competency": "Recommend Tests",
+    "difficulty": "hard",
+    "disease_example": "Coronary Atherosclerotic Heart Disease"
   },
   {
     "id": 10,
-    "department": "OB/GYN",
-    "competency": "Differential Diagnosis",
-    "difficulty": "Intermediate",
-    "disease_example": "Lower abdominal pain"
+    "department": "Internal Medicine",
+    "competency": "Interpretation",
+    "difficulty": "easy",
+    "disease_example": "Brucella melitensis infection"
   },
   {
     "id": 11,
-    "department": "OB/GYN",
-    "competency": "Recommend Tests",
-    "difficulty": "Intermediate",
-    "disease_example": "Irregular vaginal bleeding"
+    "department": "Internal Medicine",
+    "competency": "Interpretation",
+    "difficulty": "medium",
+    "disease_example": "Bronchiectasis with infection, respiratory failure, and type 2 diabetes mellitus."
   },
   {
     "id": 12,
-    "department": "OB/GYN",
-    "competency": "Treatment Plan",
-    "difficulty": "Advanced",
-    "disease_example": "Ectopic pregnancy"
+    "department": "Internal Medicine",
+    "competency": "Interpretation",
+    "difficulty": "hard",
+    "disease_example": "Pulmonary tuberculosis with pulmonary infection"
   },
   {
     "id": 13,
-    "department": "Pediatrics",
-    "competency": "Symptom Gathering",
-    "difficulty": "Basic",
-    "disease_example": "Fever in child"
+    "department": "Internal Medicine",
+    "competency": "Final Diagnosis",
+    "difficulty": "easy",
+    "disease_example": "Chronic obstructive pulmonary disease with infection."
   },
   {
     "id": 14,
-    "department": "Pediatrics",
-    "competency": "Differential Diagnosis",
-    "difficulty": "Intermediate",
-    "disease_example": "Persistent cough"
+    "department": "Internal Medicine",
+    "competency": "Final Diagnosis",
+    "difficulty": "medium",
+    "disease_example": "Severe pneumonia"
   },
   {
     "id": 15,
-    "department": "Pediatrics",
-    "competency": "Interpretation",
-    "difficulty": "Intermediate",
-    "disease_example": "Pediatric anemia labs"
+    "department": "Internal Medicine",
+    "competency": "Final Diagnosis",
+    "difficulty": "hard",
+    "disease_example": "Hemorrhage in the left basal ganglia, Demyelinating changes in the periventricular white matter of both lateral ventricles"
   },
   {
     "id": 16,
     "department": "Pediatrics",
-    "competency": "Treatment Plan",
-    "difficulty": "Advanced",
-    "disease_example": "Acute asthma exacerbation"
+    "competency": "Symptom Gathering",
+    "difficulty": "easy",
+    "disease_example": "Cow's milk protein allergy"
   },
   {
     "id": 17,
-    "department": "ENT",
+    "department": "Pediatrics",
     "competency": "Symptom Gathering",
-    "difficulty": "Basic",
-    "disease_example": "Sore throat"
+    "difficulty": "medium",
+    "disease_example": "Rotavirus gastroenteritis"
   },
   {
     "id": 18,
-    "department": "ENT",
+    "department": "Pediatrics",
+    "competency": "Symptom Gathering",
+    "difficulty": "hard",
+    "disease_example": "Kawasaki disease"
+  },
+  {
+    "id": 19,
+    "department": "Pediatrics",
     "competency": "Differential Diagnosis",
-    "difficulty": "Intermediate",
-    "disease_example": "Hearing loss"
+    "difficulty": "easy",
+    "disease_example": "Pneumonia"
+  },
+  {
+    "id": 20,
+    "department": "Pediatrics",
+    "competency": "Differential Diagnosis",
+    "difficulty": "medium",
+    "disease_example": "Allergic reaction, hyperuricemia"
+  },
+  {
+    "id": 21,
+    "department": "Pediatrics",
+    "competency": "Differential Diagnosis",
+    "difficulty": "hard",
+    "disease_example": "Neonatal omphalitis"
+  },
+  {
+    "id": 22,
+    "department": "Pediatrics",
+    "competency": "Recommend Tests",
+    "difficulty": "easy",
+    "disease_example": "Hand, foot and mouth disease"
+  },
+  {
+    "id": 23,
+    "department": "Pediatrics",
+    "competency": "Recommend Tests",
+    "difficulty": "medium",
+    "disease_example": "Deglutition syndrome"
+  },
+  {
+    "id": 24,
+    "department": "Pediatrics",
+    "competency": "Recommend Tests",
+    "difficulty": "hard",
+    "disease_example": "Bronchopneumonia"
+  },
+  {
+    "id": 25,
+    "department": "Pediatrics",
+    "competency": "Interpretation",
+    "difficulty": "easy",
+    "disease_example": "hyperuricemia"
+  },
+  {
+    "id": 26,
+    "department": "Pediatrics",
+    "competency": "Interpretation",
+    "difficulty": "medium",
+    "disease_example": "Neonatal omphalitis"
+  },
+  {
+    "id": 27,
+    "department": "Pediatrics",
+    "competency": "Interpretation",
+    "difficulty": "hard",
+    "disease_example": "Infectious mononucleosis"
+  },
+  {
+    "id": 28,
+    "department": "Pediatrics",
+    "competency": "Final Diagnosis",
+    "difficulty": "easy",
+    "disease_example": "Rotavirus enteritis"
+  },
+  {
+    "id": 29,
+    "department": "Pediatrics",
+    "competency": "Final Diagnosis",
+    "difficulty": "medium",
+    "disease_example": "Bronchitis"
+  },
+  {
+    "id": 30,
+    "department": "Pediatrics",
+    "competency": "Final Diagnosis",
+    "difficulty": "hard",
+    "disease_example": "Bronchopneumonia"
+  },
+  {
+    "id": 31,
+    "department": "Otorhinolaryngology",
+    "competency": "Symptom Gathering",
+    "difficulty": "easy",
+    "disease_example": "ethmoid sinus"
+  },
+  {
+    "id": 32,
+    "department": "Otorhinolaryngology",
+    "competency": "Symptom Gathering",
+    "difficulty": "medium",
+    "disease_example": "Chronic Lingual Tonsillitis"
+  },
+  {
+    "id": 33,
+    "department": "Otorhinolaryngology",
+    "competency": "Symptom Gathering",
+    "difficulty": "hard",
+    "disease_example": "Otitis Media"
+  },
+  {
+    "id": 34,
+    "department": "Otorhinolaryngology",
+    "competency": "Differential Diagnosis",
+    "difficulty": "easy",
+    "disease_example": "Sinonasal Inverted Papilloma"
+  },
+  {
+    "id": 35,
+    "department": "Otorhinolaryngology",
+    "competency": "Differential Diagnosis",
+    "difficulty": "medium",
+    "disease_example": "Fungal Sinusitis"
+  },
+  {
+    "id": 36,
+    "department": "Otorhinolaryngology",
+    "competency": "Differential Diagnosis",
+    "difficulty": "hard",
+    "disease_example": "Vocal Cord Polyp"
+  },
+  {
+    "id": 37,
+    "department": "Otorhinolaryngology",
+    "competency": "Recommend Tests",
+    "difficulty": "easy",
+    "disease_example": "Vocal Cord Polyp"
+  },
+  {
+    "id": 38,
+    "department": "Otorhinolaryngology",
+    "competency": "Recommend Tests",
+    "difficulty": "medium",
+    "disease_example": "Eagle Syndrome"
+  },
+  {
+    "id": 39,
+    "department": "Otorhinolaryngology",
+    "competency": "Recommend Tests",
+    "difficulty": "hard",
+    "disease_example": "Laryngeal cancer"
+  },
+  {
+    "id": 40,
+    "department": "Otorhinolaryngology",
+    "competency": "Interpretation",
+    "difficulty": "easy",
+    "disease_example": "Papilloma"
+  },
+  {
+    "id": 41,
+    "department": "Otorhinolaryngology",
+    "competency": "Interpretation",
+    "difficulty": "medium",
+    "disease_example": "Chronic Tonsillitis"
+  },
+  {
+    "id": 42,
+    "department": "Otorhinolaryngology",
+    "competency": "Interpretation",
+    "difficulty": "hard",
+    "disease_example": "Epistaxis Syndrome"
+  },
+  {
+    "id": 43,
+    "department": "Otorhinolaryngology",
+    "competency": "Final Diagnosis",
+    "difficulty": "easy",
+    "disease_example": "Acute Epiglottitis"
+  },
+  {
+    "id": 44,
+    "department": "Otorhinolaryngology",
+    "competency": "Final Diagnosis",
+    "difficulty": "medium",
+    "disease_example": "Laryngeal Squamous Cell Carcinoma"
+  },
+  {
+    "id": 45,
+    "department": "Otorhinolaryngology",
+    "competency": "Final Diagnosis",
+    "difficulty": "hard",
+    "disease_example": "Deviated Nasal Septum"
+  },
+  {
+    "id": 46,
+    "department": "Obstetrics and Gynecology",
+    "competency": "Symptom Gathering",
+    "difficulty": "easy",
+    "disease_example": "Cervical polyp with bleeding, threatened early miscarriage"
+  },
+  {
+    "id": 47,
+    "department": "Obstetrics and Gynecology",
+    "competency": "Symptom Gathering",
+    "difficulty": "medium",
+    "disease_example": "Right ampullary tubal pregnancy with abortion"
+  },
+  {
+    "id": 48,
+    "department": "Obstetrics and Gynecology",
+    "competency": "Symptom Gathering",
+    "difficulty": "hard",
+    "disease_example": "Delivery at 39 weeks of gestation, G1P1L1, LOA"
+  },
+  {
+    "id": 49,
+    "department": "Obstetrics and Gynecology",
+    "competency": "Differential Diagnosis",
+    "difficulty": "easy",
+    "disease_example": "Endometrial polyp"
+  },
+  {
+    "id": 50,
+    "department": "Obstetrics and Gynecology",
+    "competency": "Differential Diagnosis",
+    "difficulty": "medium",
+    "disease_example": "Left paraovarian cyst"
+  },
+  {
+    "id": 51,
+    "department": "Obstetrics and Gynecology",
+    "competency": "Differential Diagnosis",
+    "difficulty": "hard",
+    "disease_example": "Heart Failure in Pregnancy"
+  },
+  {
+    "id": 52,
+    "department": "Obstetrics and Gynecology",
+    "competency": "Recommend Tests",
+    "difficulty": "easy",
+    "disease_example": "Endometrial Malignant Neoplasm"
+  },
+  {
+    "id": 53,
+    "department": "Surgery",
+    "competency": "Symptom Gathering",
+    "difficulty": "easy",
+    "disease_example": "Obstructive jaundice, cholecystitis, and cholelithiasis"
+  },
+  {
+    "id": 54,
+    "department": "Surgery",
+    "competency": "Symptom Gathering",
+    "difficulty": "medium",
+    "disease_example": "Low-grade appendiceal mucinous neoplasm"
+  },
+  {
+    "id": 55,
+    "department": "Surgery",
+    "competency": "Symptom Gathering",
+    "difficulty": "hard",
+    "disease_example": "Bilateral papillary thyroid microcarcinoma"
+  },
+  {
+    "id": 56,
+    "department": "Surgery",
+    "competency": "Differential Diagnosis",
+    "difficulty": "easy",
+    "disease_example": "Gallbladder polyp"
+  },
+  {
+    "id": 57,
+    "department": "Surgery",
+    "competency": "Differential Diagnosis",
+    "difficulty": "medium",
+    "disease_example": "Acute suppurative cholecystitis with bile leakage"
+  },
+  {
+    "id": 58,
+    "department": "Surgery",
+    "competency": "Differential Diagnosis",
+    "difficulty": "hard",
+    "disease_example": "Cervical spinal canal stenosis"
+  },
+  {
+    "id": 59,
+    "department": "Surgery",
+    "competency": "Recommend Tests",
+    "difficulty": "easy",
+    "disease_example": "Stage IA adenocarcinoma of the right upper lobe of the lung"
+  },
+  {
+    "id": 60,
+    "department": "Surgery",
+    "competency": "Recommend Tests",
+    "difficulty": "medium",
+    "disease_example": "Open fracture"
+  },
+  {
+    "id": 61,
+    "department": "Surgery",
+    "competency": "Recommend Tests",
+    "difficulty": "hard",
+    "disease_example": "Fracture with skin necrosis"
+  },
+  {
+    "id": 62,
+    "department": "Surgery",
+    "competency": "Interpretation",
+    "difficulty": "easy",
+    "disease_example": "Right Achilles tendon rupture"
+  },
+  {
+    "id": 63,
+    "department": "Surgery",
+    "competency": "Interpretation",
+    "difficulty": "medium",
+    "disease_example": "Intracerebral hemorrhage"
+  },
+  {
+    "id": 64,
+    "department": "Surgery",
+    "competency": "Interpretation",
+    "difficulty": "hard",
+    "disease_example": "Right epididymal cyst, hepatitis B"
+  },
+  {
+    "id": 65,
+    "department": "Surgery",
+    "competency": "Final Diagnosis",
+    "difficulty": "easy",
+    "disease_example": "Splenic rupture"
+  },
+  {
+    "id": 66,
+    "department": "Surgery",
+    "competency": "Final Diagnosis",
+    "difficulty": "medium",
+    "disease_example": "Mixed hemorrhoids"
+  },
+  {
+    "id": 67,
+    "department": "Surgery",
+    "competency": "Final Diagnosis",
+    "difficulty": "hard",
+    "disease_example": "Deep vein thrombosis of the lower extremity"
+  },
+  {
+    "id": 68,
+    "department": "Obstetrics and Gynecology",
+    "competency": "Recommend Tests",
+    "difficulty": "medium",
+    "disease_example": "Abnormal uterine bleeding"
+  },
+  {
+    "id": 69,
+    "department": "Obstetrics and Gynecology",
+    "competency": "Recommend Tests",
+    "difficulty": "hard",
+    "disease_example": "Secondary Infertility"
+  },
+  {
+    "id": 70,
+    "department": "Obstetrics and Gynecology",
+    "competency": "Interpretation",
+    "difficulty": "easy",
+    "disease_example": "Submucosal fibroids of the uterus"
+  },
+  {
+    "id": 71,
+    "department": "Obstetrics and Gynecology",
+    "competency": "Interpretation",
+    "difficulty": "medium",
+    "disease_example": "Ruptured corpus luteum of the ovary with bleeding"
+  },
+  {
+    "id": 72,
+    "department": "Obstetrics and Gynecology",
+    "competency": "Interpretation",
+    "difficulty": "hard",
+    "disease_example": "Ovarian teratoma"
+  },
+  {
+    "id": 73,
+    "department": "Obstetrics and Gynecology",
+    "competency": "Final Diagnosis",
+    "difficulty": "easy",
+    "disease_example": "Placenta accreta with bleeding"
+  },
+  {
+    "id": 74,
+    "department": "Obstetrics and Gynecology",
+    "competency": "Final Diagnosis",
+    "difficulty": "medium",
+    "disease_example": "Cervicitis"
+  },
+  {
+    "id": 75,
+    "department": "Obstetrics and Gynecology",
+    "competency": "Final Diagnosis",
+    "difficulty": "hard",
+    "disease_example": "Bartholin's gland cyst with infection"
   }
 ]
