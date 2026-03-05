@@ -1,0 +1,128 @@
+[
+  {
+    "id": 1,
+    "department": "Internal Medicine",
+    "competency": "Symptom Gathering",
+    "difficulty": "Basic",
+    "disease_example": "Acute ischemic stroke"
+  },
+  {
+    "id": 2,
+    "department": "Internal Medicine",
+    "competency": "Differential Diagnosis",
+    "difficulty": "Intermediate",
+    "disease_example": "Chest pain (ACS vs GERD)"
+  },
+  {
+    "id": 3,
+    "department": "Internal Medicine",
+    "competency": "Recommend Tests",
+    "difficulty": "Intermediate",
+    "disease_example": "Chronic cough"
+  },
+  {
+    "id": 4,
+    "department": "Internal Medicine",
+    "competency": "Final Diagnosis",
+    "difficulty": "Advanced",
+    "disease_example": "Heart failure"
+  },
+  {
+    "id": 5,
+    "department": "Surgery",
+    "competency": "Symptom Gathering",
+    "difficulty": "Basic",
+    "disease_example": "Acute appendicitis"
+  },
+  {
+    "id": 6,
+    "department": "Surgery",
+    "competency": "Differential Diagnosis",
+    "difficulty": "Intermediate",
+    "disease_example": "Acute abdominal pain"
+  },
+  {
+    "id": 7,
+    "department": "Surgery",
+    "competency": "Recommend Tests",
+    "difficulty": "Intermediate",
+    "disease_example": "Suspected gallstones"
+  },
+  {
+    "id": 8,
+    "department": "Surgery",
+    "competency": "Treatment Plan",
+    "difficulty": "Advanced",
+    "disease_example": "Bowel obstruction"
+  },
+  {
+    "id": 9,
+    "department": "OB/GYN",
+    "competency": "Symptom Gathering",
+    "difficulty": "Basic",
+    "disease_example": "Early pregnancy nausea"
+  },
+  {
+    "id": 10,
+    "department": "OB/GYN",
+    "competency": "Differential Diagnosis",
+    "difficulty": "Intermediate",
+    "disease_example": "Lower abdominal pain"
+  },
+  {
+    "id": 11,
+    "department": "OB/GYN",
+    "competency": "Recommend Tests",
+    "difficulty": "Intermediate",
+    "disease_example": "Irregular vaginal bleeding"
+  },
+  {
+    "id": 12,
+    "department": "OB/GYN",
+    "competency": "Treatment Plan",
+    "difficulty": "Advanced",
+    "disease_example": "Ectopic pregnancy"
+  },
+  {
+    "id": 13,
+    "department": "Pediatrics",
+    "competency": "Symptom Gathering",
+    "difficulty": "Basic",
+    "disease_example": "Fever in child"
+  },
+  {
+    "id": 14,
+    "department": "Pediatrics",
+    "competency": "Differential Diagnosis",
+    "difficulty": "Intermediate",
+    "disease_example": "Persistent cough"
+  },
+  {
+    "id": 15,
+    "department": "Pediatrics",
+    "competency": "Interpretation",
+    "difficulty": "Intermediate",
+    "disease_example": "Pediatric anemia labs"
+  },
+  {
+    "id": 16,
+    "department": "Pediatrics",
+    "competency": "Treatment Plan",
+    "difficulty": "Advanced",
+    "disease_example": "Acute asthma exacerbation"
+  },
+  {
+    "id": 17,
+    "department": "ENT",
+    "competency": "Symptom Gathering",
+    "difficulty": "Basic",
+    "disease_example": "Sore throat"
+  },
+  {
+    "id": 18,
+    "department": "ENT",
+    "competency": "Differential Diagnosis",
+    "difficulty": "Intermediate",
+    "disease_example": "Hearing loss"
+  }
+]

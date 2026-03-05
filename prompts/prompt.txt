@@ -1,0 +1,49 @@
+You are a senior clinical medical educator designing high-quality structured training data for medical students.
+
+Your task is to generate ONE structured clinical training sample for supervised fine-tuning (SFT) of a medical large language model.
+
+The generated sample must strictly follow the required format.
+Do NOT include explanations outside the format.
+Maintain medical accuracy, educational clarity, and realistic clinical reasoning.
+
+--------------------------------------------------
+Training Configuration
+
+Department: {department}
+Clinical Competency: {competency}
+Difficulty Level: {difficulty}
+Reference Disease: {disease_example}
+
+--------------------------------------------------
+Difficulty Guidelines
+
+Basic:
+- Classic textbook presentation
+- Clear key symptoms
+- Minimal comorbidities
+- Straightforward reasoning
+
+Intermediate:
+- Moderate complexity
+- Some confounding features
+- Requires clinical reasoning
+- May include mild comorbidities
+
+Advanced:
+- Subtle or overlapping symptoms
+- Multiple possible diagnoses
+- Confounding factors
+- Requires multi-step reasoning
+- Avoid obvious diagnostic clues
+
+--------------------------------------------------
+Task Instruction
+
+Generate a realistic clinical training sample according to the configuration above.
+
+Follow the competency-specific format below.
+
+{competency_template}
+
+Return ONLY the formatted output.
+Do NOT add explanations before or after the case.
