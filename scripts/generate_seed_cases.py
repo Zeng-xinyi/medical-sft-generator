@@ -5,174 +5,221 @@ import torch
 from tqdm import tqdm
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
-# -------------------------
-# 配置路径
-# -------------------------
-MODEL_NAME = "/data1/zxy/models/qwen/Qwen2.5-0.5B-Instruct"
+# =========================
+# 1. 路径配置
+# =========================
+
+MODEL_NAME = "/data1/zxy/models/qwen/Qwen2.5-3B-Instruct"
 SEED_FILE = "/data1/zxy/projects/medical-sft-generator/data/seed.json"
 OUTPUT_FILE = "/data1/zxy/projects/medical-sft-generator/output/sft_train_data.json"
 
-# -------------------------
-# 1. 加载模型
-# -------------------------
+# =========================
+# 2. 加载模型
+# =========================
+
 print("Loading model...")
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)
+
+tokenizer = AutoTokenizer.from_pretrained(
+    MODEL_NAME,
+    trust_remote_code=True
+)
+
 model = AutoModelForCausalLM.from_pretrained(
     MODEL_NAME,
-    torch_dtype=torch.float16,
+    torch_dtype=torch.bfloat16,
     device_map="auto",
     trust_remote_code=True
 )
+
 model.eval()
 
-# -------------------------
-# 2. 构造英文 One-Shot Example
-# -------------------------
-# 这是根据你提供的“食管癌放疗后突发脑梗死”病例改编的标准英文范例
-# 我们把它做得结构非常清晰，强迫模型模仿
-ONE_SHOT_EXAMPLE = """
-Example Input:
-Department: Neurology
-Competency: Final Diagnosis
-Disease: Cerebral Infarction
+# =========================
+# 3. 模板定义
+# =========================
 
-Example Output:
-Case:
-A 73-year-old male farmer presents with sudden left-sided limb weakness for 1 day.
-History: Diagnosed with esophageal cancer in 2018 (post-radiotherapy), Hypertension for 5 years (BP up to 180/110 mmHg).
-Physical Exam: BP 177/107 mmHg. Conscious. Left limb muscle strength Grade 4, sensation decreased. 
-Imaging: CT shows right paraventricular cerebral infarction.
-
-Question:
-What is the most likely diagnosis?
-
-Answer:
-Final Diagnosis: Cerebral Infarction; Hypertension Grade 3 (Very High Risk); Post-esophageal cancer radiotherapy.
-Reasoning: The patient has risk factors (HTN, cancer history), sudden onset of focal neurological deficits, and CT confirmation.
-"""
-
-# -------------------------
-# 3. 定义任务模板
-# -------------------------
 templates = {
-    "Symptom Gathering": """Case:
-[Patient details and chief complaint]
+
+"Symptom Gathering": """Case:
+Age:
+Gender:
+Chief Complaint:
+History of Present Illness:
+Relevant Background:
 
 Question:
 What additional symptoms should be collected?
 
 Answer:
-[List symptoms and reasons]""",
+- Symptom 1:
+  - Why it is important:
+- Symptom 2:
+  - Why it is important:
+- Symptom 3:
+  - Why it is important:
+""",
 
-    "Differential Diagnosis": """Case:
-[History and physical exam]
+"Differential Diagnosis": """Case:
+Age:
+Gender:
+Chief Complaint:
+History of Present Illness:
+Past Medical History:
+Physical Examination:
 
 Question:
 Provide differential diagnoses.
 
 Answer:
-[List diagnoses with evidence]""",
+1. Diagnosis:
+   - Supporting Evidence:
+   - Distinguishing Features:
+2. Diagnosis:
+   - Supporting Evidence:
+   - Distinguishing Features:
+3. Diagnosis:
+   - Supporting Evidence:
+   - Distinguishing Features:
+""",
 
-    "Recommend Tests": """Case:
-[History and physical exam]
+"Recommend Tests": """Case:
+Age:
+Gender:
+Chief Complaint:
+History:
+Physical Examination:
 
 Question:
-What diagnostic tests should be recommended?
+What diagnostic tests should be recommended and why?
 
 Answer:
-[List tests and purposes]""",
+1. Test:
+   - Purpose:
+   - How the result would influence management:
+2. Test:
+   - Purpose:
+   - How the result would influence management:
+3. Test:
+   - Purpose:
+   - How the result would influence management:
+""",
 
-    "Interpretation": """Case:
-[Clinical context and lab results]
+"Interpretation": """Case:
+Age:
+Gender:
+Clinical Context:
+Laboratory / Imaging Results:
 
 Question:
 Interpret the findings.
 
 Answer:
-[Analysis of findings]""",
+1. Abnormal Findings:
+2. Clinical Significance:
+3. Implications for Diagnosis or Management:
+""",
 
-    "Final Diagnosis": """Case:
-[Full case details]
+"Final Diagnosis": """Case:
+Age:
+Gender:
+Chief Complaint:
+History of Present Illness:
+Past Medical History:
+Physical Examination:
+Relevant Tests:
 
 Question:
 What is the most likely diagnosis?
 
 Answer:
-[Final diagnosis and reasoning]"""
+Final Diagnosis:
+Step-by-Step Reasoning:
+Why Alternative Diagnoses Are Less Likely:
+"""
 }
 
-# -------------------------
-# 4. 解析函数 (兼容 Markdown)
-# -------------------------
-def parse_generated_text(text):
-    """
-    极度宽容的解析逻辑
-    """
-    # 1. 找 Question (允许 Question:, **Question**, ### Question 等)
-    parts = re.split(r'(?i)(?:^|\n)[\#\*]*\s*Question[:\s]*', text, maxsplit=1)
-    
-    if len(parts) < 2:
-        return None, None, "No 'Question' found"
-        
-    case_part = parts[0].strip()
-    remaining = parts[1]
-    
-    # 清理 Case 部分可能存在的 "Case:" 头
-    case_part = re.sub(r'(?i)^[\#\*\s]*Case[:\s]*', '', case_part).strip()
-    
-    # 2. 找 Answer
-    q_and_a = re.split(r'(?i)(?:^|\n)[\#\*]*\s*Answer[:\s]*', remaining, maxsplit=1)
-    
-    if len(q_and_a) < 2:
-        return None, None, "No 'Answer' found"
-        
-    question_part = q_and_a[0].strip()
-    answer_part = q_and_a[1].strip()
-    
-    # 3. 组装
-    full_instruction = f"Case:\n{case_part}\n\nQuestion:\n{question_part}"
-    
-    return full_instruction, answer_part, "Success"
+# =========================
+# 4. 文本解析函数
+# =========================
 
-# -------------------------
-# 5. 生成流程
-# -------------------------
+def parse_generated_text(text):
+
+    try:
+
+        # 去掉markdown
+        text = re.sub(r'\*+', '', text)
+        text = re.sub(r'#+', '', text)
+
+        q_match = re.search(r'Question\s*:', text, re.IGNORECASE)
+        a_match = re.search(r'Answer\s*:', text, re.IGNORECASE)
+
+        if not q_match or not a_match:
+            return None, None
+
+        case_part = text[:q_match.start()].strip()
+        question_part = text[q_match.end():a_match.start()].strip()
+        answer_part = text[a_match.end():].strip()
+
+        instruction = f"{case_part}\n\nQuestion:\n{question_part}"
+
+        return instruction, answer_part
+
+    except:
+        return None, None
+
+# =========================
+# 5. 读取 seed
+# =========================
 
 if not os.path.exists(SEED_FILE):
-    print(f"Error: {SEED_FILE} not found!")
-    exit(1)
+    print("Seed file not found")
+    exit()
 
-with open(SEED_FILE, "r") as f:
+with open(SEED_FILE) as f:
     seeds = json.load(f)
-
-sft_data = []
 
 print(f"Generating cases for {len(seeds)} seeds...")
 
+sft_data = []
+
+# =========================
+# 6. 生成数据
+# =========================
+
+debug_count = 0
+
 for seed in tqdm(seeds):
+
     competency = seed["competency"]
     template = templates.get(competency)
 
     if template is None:
         continue
 
-    # 构造 Prompt：One-Shot + Current Task
-    # 重点：要求 Concise (简洁)，防止模型废话太多被截断
-    prompt = (
-        "You are a medical exam generator. Imitate the example below strictly.\n"
-        "Keep the 'Case' description concise and professional.\n\n"
-        f"{ONE_SHOT_EXAMPLE}\n\n"
-        "Now generate a case for the following:\n"
-        f"Department: {seed['department']}\n"
-        f"Competency: {seed['competency']}\n"
-        f"Difficulty: {seed['difficulty']}\n"
-        f"Disease: {seed['disease_example']}\n\n"
-        "Output:\n"
-        f"{template}"
-    )
+    prompt = f"""
+Generate ONE medical clinical training example.
+
+Requirements:
+- Realistic clinical scenario
+- Match department and disease
+- No markdown
+- No extra text
+- Follow structure exactly
+
+Department: {seed['department']}
+Competency: {seed['competency']}
+Difficulty: {seed['difficulty']}
+Disease: {seed['disease_example']}
+
+Output format:
+
+{template}
+
+Important:
+The output MUST include Case, Question, and Answer sections.
+"""
 
     messages = [
-        {"role": "system", "content": "You are a helpful medical assistant. Follow the format strictly. Do not use Markdown headers."},
+        {"role": "system", "content": "You are a senior medical educator."},
         {"role": "user", "content": prompt}
     ]
 
@@ -184,55 +231,97 @@ for seed in tqdm(seeds):
 
     inputs = tokenizer(chat_text, return_tensors="pt").to(model.device)
 
-    # -------- Generate -------- 
-    try:
-        outputs = model.generate(
-            **inputs,
-            max_new_tokens=1024,   # 足够长，防止截断
-            temperature=0.3,       # 重要！降低温度，让模型更听话，不做随机发散
-            top_p=0.85,
-            do_sample=True,
-            repetition_penalty=1.1
+    outputs = model.generate(
+        **inputs,
+        max_new_tokens=700,
+        temperature=0.6,
+        top_p=0.9,
+        repetition_penalty=1.05,
+        do_sample=True,
+        eos_token_id=tokenizer.eos_token_id
+    )
+
+    generated_ids = outputs[0][inputs["input_ids"].shape[1]:]
+
+    text = tokenizer.decode(generated_ids, skip_special_tokens=True)
+
+    # Debug输出
+    if debug_count < 3:
+        print("\n------RAW OUTPUT------")
+        print(text)
+        print("----------------------")
+        debug_count += 1
+
+    # =========================
+    # 如果没有Answer 自动补全
+    # =========================
+
+    if "Answer:" not in text:
+
+        fix_prompt = f"""
+Complete the medical case by adding ONLY the missing Answer section.
+
+{text}
+
+Answer:
+"""
+
+        messages = [
+            {"role": "system", "content": "You are a clinical expert."},
+            {"role": "user", "content": fix_prompt}
+        ]
+
+        chat_text = tokenizer.apply_chat_template(
+            messages,
+            tokenize=False,
+            add_generation_prompt=True
         )
 
-        input_len = inputs["input_ids"].shape[1]
-        generated_ids = outputs[0][input_len:]
-        text = tokenizer.decode(generated_ids, skip_special_tokens=True)
-        
-        # -------- Parse --------
-        instruction, response, status = parse_generated_text(text)
+        inputs = tokenizer(chat_text, return_tensors="pt").to(model.device)
 
-        if status == "Success":
-            sft_data.append({
-                "instruction": instruction,
-                "input": "",
-                "output": response,
-                "meta": seed
-            })
-        else:
-            tqdm.write(f"\n[WARNING] Seed {seed['id']} failed: {status}")
-            # 即使失败也保存，后续可清洗
-            sft_data.append({
-                "instruction": "FORMAT_ERROR",
-                "input": "",
-                "output": text,
-                "meta": seed,
-                "error": status
-            })
+        outputs = model.generate(
+            **inputs,
+            max_new_tokens=200,
+            temperature=0.3
+        )
 
-    except Exception as e:
-        print(f"Error processing seed {seed['id']}: {e}")
+        fix_ids = outputs[0][inputs["input_ids"].shape[1]:]
+        fix_text = tokenizer.decode(fix_ids, skip_special_tokens=True)
 
-# -------------------------
-# 6. 保存结果
-# -------------------------
+        text = text + "\nAnswer:\n" + fix_text
+
+    # =========================
+    # 解析
+    # =========================
+
+    instruction, response = parse_generated_text(text)
+
+    if instruction and response:
+
+        sft_data.append({
+            "instruction": instruction,
+            "input": "",
+            "output": response,
+            "meta": {
+                "department": seed["department"],
+                "competency": seed["competency"],
+                "difficulty": seed["difficulty"]
+            }
+        })
+
+    else:
+
+        print(f"Warning: Failed to parse seed {seed['id']}")
+
+# =========================
+# 7. 保存数据
+# =========================
+
 os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
 
-with open(OUTPUT_FILE, "w", encoding='utf-8') as f:
+with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
     json.dump(sft_data, f, indent=2, ensure_ascii=False)
 
-# 统计成功率
-success_count = len([x for x in sft_data if x.get("instruction") != "FORMAT_ERROR"])
-print(f"\nProcessing complete!")
-print(f"Valid formatted data: {success_count} / {len(sft_data)}")
+print("\nGeneration finished")
+print(f"Total samples: {len(sft_data)}")
 print(f"Saved to: {OUTPUT_FILE}")
